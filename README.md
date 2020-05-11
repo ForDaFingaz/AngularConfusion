@@ -38,3 +38,32 @@ npm install @angular/cdk@6.4.7 --save
 npm install --save @angular/animations@6.1.7
 npm install --save hammerjs@2.0.8
 npm install --save @angular/flex-layout@6.0.0-beta.18
+
+##More Notes:
+Generate a component:
+  ng generate component <<component name>>
+
+Set up a new component
+1. Update the component html file to include name of component:
+  Example: <app-menu></app-menu>
+2. For this excercise a class to define data was created: .\src\app\shared\dish.ts
+3. Update the component class file. Example: .\src\app\menu\menu.component.ts
+4. Update the component.html file: Example: .\src\app\menu\menu.component.html
+5. Update the module: Example: .\src\app\app.module.ts
+6. Update the styles.scss
+
+Directives
+-- Tell Angular how to render the templates in the DOM
+-- Can be defined in a class using the @Directive decorator
+-- a component is a 'special kind' of directive with a template associated with it
+
+Structural Directive
+- Add, remove, replace objects in the DOM
+- Apply structural directive to a host element in the DOM and it's descendents
+  --NgIf, NgFor, NgSwitch
+  --<mat-list-item *ngFor="let dish of dishes">
+
+Attribute Directives
+
+
+  
