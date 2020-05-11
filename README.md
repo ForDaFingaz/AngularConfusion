@@ -40,8 +40,7 @@ npm install --save hammerjs@2.0.8
 npm install --save @angular/flex-layout@6.0.0-beta.18
 
 ##More Notes:
-Generate a component:
-  ng generate component <<component name>>
+Generate a component: <<component name>>
 
 Set up a new component
 1. Update the component html file to include name of component:
