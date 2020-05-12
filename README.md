@@ -51,6 +51,10 @@ Set up a new component
 5. Update the module: Example: .\src\app\app.module.ts
 6. Update the styles.scss
 
+Create a Service
+1. md .\src\app\services
+2. ng generate service services/dish
+
 Directives
 -- Tell Angular how to render the templates in the DOM
 -- Can be defined in a class using the @Directive decorator
@@ -63,6 +67,51 @@ Structural Directive
   --<mat-list-item *ngFor="let dish of dishes">
 
 Attribute Directives
+
+Model-View-Controller [MVC]
+Model 
+  - Manages the behavior and data of the application domian
+  - Responds to requests for information about the state [requests usually come from the view]
+  - Responds to instructions to change the state [instructions usually come from the controller]
+  - In event-driven systems, notifies the 'observers' [usually views] when information changes so they can react
+View
+  - Renders the model into a form suitable for interaction - user interface
+  - Multiple views can exist for a single model
+  - Viewport has a 1:1 correspondence with a display surface and knows how to render it
+  - Templates
+Controller
+  - Receives user input and initiates a response by making calls to models
+    - The model keeps track of the application state
+  - Accepts input from user and instructs the model and viewport to perform actions based on input
+  - Components  
+
+Model View-View-Model [MVVM]
+Descendent of MVC
+Also called Model-View-Binder
+  View Model
+    - Abstraction of the view that exposes public properties and commands
+    - Declarative data binding
+
+[        Data Biding      ]
+|------|          |-------|          |-------|  
+| View | <------> | View  | ------>  | Model |     
+|      |          | Model | <------  |       |
+|------|          |-------|          |-------|
+[     Presentation and    ]        [Business Logic]
+[     Presentation Logic  ]        [  and Data    ] 
+
+Dependency Injection
+  For a component to get a dependency there are 3 ways
+    - Create the dependency itself using 'new' operator
+    - Look up dependency using a global variable
+    - Have dependency passed to it where needed
+      - No hard-coding neccessary
+      - Testing is feasible
+  DI involves four roles
+    - The service
+    - The client
+    - The interfaces
+    - The injector
 
 
   
