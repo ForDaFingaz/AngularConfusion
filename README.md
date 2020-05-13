@@ -55,6 +55,13 @@ Set up a new component
 Routing
 ng generate module app-routing
 
+  Use parameters in routing:
+  -- In a method: 
+      this.router.navigate(['/dishdetail', dish.id]);
+  -- In a component: 
+      <a *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">
+
+
 Create a Service
 1. md .\src\app\services
 2. ng generate service services/dish
