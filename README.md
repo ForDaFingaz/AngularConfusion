@@ -52,6 +52,9 @@ Set up a new component
 5. Update the module: Example: .\src\app\app.module.ts
 6. Update the styles.scss
 
+Routing
+ng generate module app-routing
+
 Create a Service
 1. md .\src\app\services
 2. ng generate service services/dish
