@@ -14,7 +14,7 @@ import { Location } from "@angular/common";
 
 export class DishdetailComponent implements OnInit {
 
-  /*@Input()*/
+  @Input()
   dish: Dish;
 
   constructor(private dishservice: DishService,
