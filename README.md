@@ -55,6 +55,9 @@ Set up a new component
 Routing
 ng generate module app-routing
 
+Add a "Login" component
+ng g component login [the "g" means "generate"]
+
   Use parameters in routing:
   -- In a method: 
       this.router.navigate(['/dishdetail', dish.id]);
@@ -118,6 +121,8 @@ Dependency Injection
     - Have dependency passed to it where needed
       - No hard-coding neccessary
       - Testing is feasible
+    - Inject using the constructor() { } in the component class:
+      constructor(public dialog: MatDialog) { }
   DI involves four roles
     - The service
     - The client
