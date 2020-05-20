@@ -11,17 +11,20 @@ import { AppComponent }             from './app.component';
 
 import { FlexLayoutModule }         from '@angular/flex-layout';
 
-import { MatCheckboxModule }        from '@angular/material/checkbox';
-import { MatFormFieldModule }       from '@angular/material/form-field';
-import { MatInputModule }           from '@angular/material/input';
-import { MatToolbarModule }         from '@angular/material/toolbar';
-import { MatListModule }            from '@angular/material/list';
-import { MatGridListModule }        from '@angular/material/grid-list';
-import { MatCardModule }            from '@angular/material/card';
 import { MatButtonModule }          from '@angular/material/button';
+import { MatCardModule }            from '@angular/material/card';
+import { MatCheckboxModule }        from '@angular/material/checkbox';
 import { MatDialogModule }          from '@angular/material/dialog';
+import { MatFormFieldModule }       from '@angular/material/form-field';
+import { MatGridListModule }        from '@angular/material/grid-list';
+import { MatInputModule }           from '@angular/material/input';
+import { MatListModule }            from '@angular/material/list';
+import { MatSelectModule }          from "@angular/material/select";
+import { MatSlideToggleModule }     from "@angular/material/slide-toggle";
+import { MatToolbarModule }         from '@angular/material/toolbar';
 
 import { FormsModule }              from '@angular/forms';
+import { ReactiveFormsModule }      from "@angular/forms";
 
 import { DishService }              from './services/dish.service';
 import { PromotionService}          from './services/promotion.service';
@@ -53,20 +56,23 @@ import { LoginComponent }           from './login/login.component';
     LoginComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
+    BrowserModule,
     FlexLayoutModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
+    FormsModule,
     MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatGridListModule,
     MatInputModule,
-    MatCheckboxModule,
-    FormsModule
+    MatListModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    ReactiveFormsModule
   ],
   providers: [
     DishService,
