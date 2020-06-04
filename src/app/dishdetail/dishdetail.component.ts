@@ -79,6 +79,9 @@ export class DishdetailComponent implements OnInit {
       date: ''
     });
     this.commentFormDirective.resetForm({rating: '5'});
+    var d = (new Date()).toISOString();
+    this.comment.date = d;
+    this.dish.comments.push(this.comment);
   }
 
   validationMessages = {
