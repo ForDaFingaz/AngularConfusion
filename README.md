@@ -52,6 +52,19 @@ Set up a new component
 5. Update the module: Example: .\src\app\app.module.ts
 6. Update the styles.scss
 
+Setting up a server to host REST API
+  JSON-SERVER
+  npm install json-server -g
+
+  Configuring the Server
+  - At any convenient location on your computer, create a new folder named json-server, and move to this folder.
+    -- f:\Users\Allan\Documents\Learning\json-server
+  - Download the db.json file provided above to this folder.
+  - Move to this folder in your terminal window, and type the following at the command prompt to start the server:
+  json-server --watch db.json -d 2000
+
+  Shut down the server by typing ctrl-C in the terminal window.
+
 Routing
 ng generate module app-routing
 
