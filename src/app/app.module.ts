@@ -33,6 +33,8 @@ import { ReactiveFormsModule }      from "@angular/forms";
 import { DishService }              from './services/dish.service';
 import { PromotionService}          from './services/promotion.service';
 import { LeaderService}             from './services/leader.service';
+import { ProcessHTTPMsgService }           from './services/process-httpmsg.service';
+
 
 import { baseURL }                  from './shared/baseurl';
 
@@ -89,6 +91,7 @@ import { LoginComponent }           from './login/login.component';
     DishService,
     LeaderService,
     PromotionService,
+    ProcessHTTPMsgService,
     { provide: 'BaseURL', useValue: baseURL }
   ],
   entryComponents: [
