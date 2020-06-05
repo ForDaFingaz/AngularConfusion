@@ -21,6 +21,7 @@ export class DishdetailComponent implements OnInit {
 
   @Input()
   dish: Dish;
+  dishcopy: Dish;
 
   @ViewChild('comform') commentFormDirective;
 
@@ -39,9 +40,10 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
-    errMess => this.errMess = <any>errMess);
+    this.route.params
+      .pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+      errMess => this.errMess = <any>errMess);
   }
 
   createForm(): void {
@@ -84,7 +86,15 @@ export class DishdetailComponent implements OnInit {
     this.commentFormDirective.resetForm({rating: '5'});
     var d = (new Date()).toISOString();
     this.comment.date = d;
-    this.dish.comments.push(this.comment);
+    this.dishcopy.comments.push(this.comment);
+    this.dishservice.putDish(this.dishcopy)
+      .subscribe(dish => {
+        this.dish = dish;
+        this.dishcopy = dish;},
+        errmess => {
+          this.dish = null;
+          this.dishcopy = null;
+          this.errMess = <any>errmess;});
   }
 
   validationMessages = {
