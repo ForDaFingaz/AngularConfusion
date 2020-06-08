@@ -16,7 +16,7 @@
       <mat-spinner></mat-spinner>
       <h4>Loading...</h4>
     </div-->
-  <div fxFlex="60" *ngIf="dish">
+  <div fxFlex="60" *ngIf="dish" [@visibility]="visibility">
     <mat-card>
       <mat-card-header>
         <mat-card-title>
