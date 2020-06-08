@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Dish } from '../shared/dish';
 import { DishService } from "../services/dish.service";
 import { Params, ActivatedRoute } from "@angular/router";
