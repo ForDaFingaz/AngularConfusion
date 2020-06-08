@@ -14,13 +14,14 @@ export class MenuComponent implements OnInit {
   errMess: string;
 
   constructor(private dishService: DishService,
-    @Inject('BaseURL') private baseURL) { }
+    @Inject('BaseURL') public baseURL) { }
 
   ngOnInit() {
     this.dishService.getDishes()
     .subscribe(dishes => this.dishes = dishes,
     errmess => this.errMess = <any>errmess);
   }
+
 
 
 

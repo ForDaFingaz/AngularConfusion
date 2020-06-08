@@ -14,17 +14,17 @@ export class PromotionService {
 
   getPromotions(): Observable<Promotion[]> {
     /*return of(PROMOTIONS).pipe(delay(2000));*/
-    return this.http.get<Promotion[]>(baseURL + '/promotions');
+    return this.http.get<Promotion[]>(baseURL + 'promotions');
   }
 
   getPromotion(id: string): Observable<Promotion> {
     /*return of(PROMOTIONS.filter((promo) => (promo.id === id))[0]).pipe(delay(2000)); */
-    return this.http.get<Promotion>(baseURL + '/promotions/' + id);
+    return this.http.get<Promotion>(baseURL + 'promotions/' + id);
   }
 
   getFeaturedPromotion(): Observable<Promotion> {
     /*return of(PROMOTIONS.filter((promotion) => promotion.featured)[0]).pipe(delay(2000)); */
-    return this.http.get<Promotion>(baseURL + '/promotions?featured=true')
+    return this.http.get<Promotion>(baseURL + 'promotions?featured=true')
     .pipe(map(promotions => promotions[0]));
   }
 }
