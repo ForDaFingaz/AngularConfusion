@@ -1,4 +1,5 @@
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { trigger, state, style, animate, transition, stagger, query } from '@angular/animations';
+import { delay } from 'rxjs/operators';
 
 export function visibility() {
     return trigger('visibility', [
@@ -14,19 +15,6 @@ export function visibility() {
     ]);
 }
 
-export function confirmSubmit() {
-  return trigger('confirmTrigger', [
-      state('shown', style({
-          transform: 'scale(1.0)',
-          opacity: 1
-      })),
-      state('hidden', style({
-          transform: 'scale(0.5)',
-          opacity: 0
-      })),
-      transition('* => *', animate('.5s ease-in-out'))
-  ]);
-}
 
 export function flyInOut() {
   return trigger('flyInOut', [

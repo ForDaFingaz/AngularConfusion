@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Feedback, ContactType} from '../shared/feedback';
-import { visibility, flyInOut, expand, confirmSubmit } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 import { FeedbackService } from '../services/feedback.service';
 
 
@@ -16,8 +16,7 @@ import { FeedbackService } from '../services/feedback.service';
     animations: [
       visibility(),
       flyInOut(),
-      expand(),
-      confirmSubmit()
+      expand()
     ]
 })
 
@@ -25,7 +24,10 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   contactType = ContactType;
   errMess: string;
-  visibility = 'shown';
+  visibility = 'hidden';
+  confirmTrigger = 'hidden';
+
+  showForm: boolean = true;
 
   @Input()
   feedback: Feedback;
@@ -109,7 +111,16 @@ export class ContactComponent implements OnInit {
     },
   };
 
+  /*setTimeout()*/
+  TimeoutTask() {
+    this.visibility = 'hidden';
+    this.feedback = null;
+    this.feedcopy = null;
+
+}
+
   onSubmit(){
+    this.showForm = false;
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
     this.feedbackForm.reset({
@@ -126,8 +137,9 @@ export class ContactComponent implements OnInit {
       .subscribe(feedback => {
         this.feedback = feedback;
         this.feedcopy = feedback;
-        this.visibility = 'hidden';
+        this.visibility = 'shown';
 
+        setTimeout(() =>{this.visibility = 'hidden'; this.showForm = true}, 5000);
         },
         errmess => {
           this.feedback = null;
