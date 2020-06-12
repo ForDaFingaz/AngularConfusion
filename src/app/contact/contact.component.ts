@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Feedback, ContactType} from '../shared/feedback';
-import { flyInOut} from '../animations/app.animation';
+import { visibility, flyInOut, expand, confirmSubmit } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 
 
 @Component({
@@ -13,21 +14,33 @@ import { flyInOut} from '../animations/app.animation';
     'style': 'display: block;'
     },
     animations: [
-      flyInOut()
+      visibility(),
+      flyInOut(),
+      expand(),
+      confirmSubmit()
     ]
 })
+
 export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
-  feedback: Feedback;
   contactType = ContactType;
+  errMess: string;
+  visibility = 'shown';
+
+  @Input()
+  feedback: Feedback;
+  feedcopy: Feedback;
 
   @ViewChild('fform') feedbackFormDirective;
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
-  }
+  constructor(private fbservice: FeedbackService,
+    private fb: FormBuilder,
+    @Inject('BaseURL') public baseURL) {
+      this.createForm();
+    }
 
   ngOnInit(): void {
+
   }
 
   createForm(): void {
@@ -109,6 +122,16 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     this.feedbackFormDirective.resetForm();
+    this.fbservice.submitFeedback(this.feedback)
+      .subscribe(feedback => {
+        this.feedback = feedback;
+        this.feedcopy = feedback;
+        this.visibility = 'hidden';
+
+        },
+        errmess => {
+          this.feedback = null;
+          this.errMess = <any>errmess;});
   }
 
 }

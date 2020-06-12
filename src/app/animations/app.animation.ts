@@ -14,6 +14,20 @@ export function visibility() {
     ]);
 }
 
+export function confirmSubmit() {
+  return trigger('confirmTrigger', [
+      state('shown', style({
+          transform: 'scale(1.0)',
+          opacity: 1
+      })),
+      state('hidden', style({
+          transform: 'scale(0.5)',
+          opacity: 0
+      })),
+      transition('* => *', animate('.5s ease-in-out'))
+  ]);
+}
+
 export function flyInOut() {
   return trigger('flyInOut', [
       state('*', style({ opacity: 1, transform: 'translateX(0)'})),
@@ -35,4 +49,6 @@ export function expand() {
           animate('200ms ease-in', style({ opacity: 1, transform: 'translateX(0)' }))
       ])
   ]);
+
+
 }

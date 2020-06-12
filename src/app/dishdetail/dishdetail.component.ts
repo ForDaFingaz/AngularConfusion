@@ -40,6 +40,7 @@ export class DishdetailComponent implements OnInit {
   next: string;
   errMess: string;
 
+
   visibility = 'shown';
 
   constructor(private dishservice: DishService,
@@ -51,8 +52,6 @@ export class DishdetailComponent implements OnInit {
     }
 
   ngOnInit() {
-
-
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
       .pipe(switchMap((params: Params) => {

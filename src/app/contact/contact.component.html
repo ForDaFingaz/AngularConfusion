@@ -9,10 +9,8 @@
     </div>
   </div>
 
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" [hidden]="feedback" >
     <h3>Send us your Feedback</h3>
-    <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
     <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">
@@ -51,9 +49,36 @@
           <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
         </mat-form-field>
       </p>
-      <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+      <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
     </form>
   </div>
+
+  <!--[@confirmTrigger]="confirmTrigger"-->
+  <div fxFlex >
+    <div *ngIf="feedback" [@visibility]="visibility">
+      <h4>Your Submission</h4>
+      <p>First Name: {{feedback.firstname}}</p>
+      <p>Last Name: {{feedback.lastname}}</p>
+      <p>Tel. Number: {{feedback.telnum}}</p>
+      <p>Email: {{feedback.email}}</p>
+      <p>Contact You: {{feedback.agree}}</p>
+      <p>How: {{feedback.contacttype}}</p>
+      <p>Feedback: {{feedback.message}}</p>
+    </div>
+
+    <div fxFlex *ngIf="errMess">
+      <h3>Error</h3>
+      <p>{{errMess}}</p>
+    </div>
+
+    <!--[@confirmTrigger]="waitTrigger"-->
+    <div  fxFlex [hidden]="feedback || errMess || feedbackForm" >
+      <h4>Submitting Form</h4>
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+
+
 
   <div fxFlex>
     <h3>Location Information</h3>
