@@ -142,6 +142,9 @@ Dependency Injection
     - The client
     - The interfaces
     - The injector
+
+Testing
+run: ng test [starts Karma]
     
 
 
