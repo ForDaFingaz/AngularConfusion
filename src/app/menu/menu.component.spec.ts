@@ -12,31 +12,12 @@ import { By }                                 from '@angular/platform-browser';
 import { DebugElement }                       from '@angular/core';
 import { MatGridListModule }                  from '@angular/material/grid-list';
 import { MatProgressSpinnerModule }           from '@angular/material/progress-spinner';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
-
-  /*
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MenuComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  */
 
   beforeEach(async(() => {
 
@@ -47,7 +28,9 @@ describe('MenuComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ BrowserAnimationsModule,
+      imports: [
+        HttpClientModule,
+        BrowserAnimationsModule,
         FlexLayoutModule,
         MatGridListModule,
         MatProgressSpinnerModule,
@@ -56,7 +39,7 @@ describe('MenuComponent', () => {
       declarations: [ MenuComponent ],
       providers: [
         { provide: DishService, useValue: dishServiceStub },
-        { provide: 'baseURL', useValue: baseURL },
+        { provide: 'BaseURL', useValue: baseURL },
       ]
     })
     .compileComponents();
@@ -64,6 +47,18 @@ describe('MenuComponent', () => {
     const dishservice = TestBed.get(DishService);
 
   }));
+
+
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MenuComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
   it('dishes items should be 4', () => {
     expect(component.dishes.length).toBe(4);
