@@ -143,8 +143,11 @@ Dependency Injection
     - The interfaces
     - The injector
 
-Testing
+Unit Testing
 run: ng test [starts Karma]
+
+E2E Testing
+run: ng e2e
     
 
 
