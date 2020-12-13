@@ -11,7 +11,8 @@ import { ProcessHTTPMsgService } from './process-httpmsg.service';
 })
 export class PromotionService {
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private processHTTPMsgService: ProcessHTTPMsgService) { }
 
   getPromotions(): Observable<Promotion[]> {

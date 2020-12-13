@@ -74,9 +74,9 @@ ng g component login [the "g" means "generate"]
 
   Use parameters in routing:
   -- In a method: 
-      this.router.navigate(['/dishdetail', dish.id]);
+      this.router.navigate(['/dishdetail', dish._id]);
   -- In a component: 
-      <a *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">
+      <a *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish._id]">
 
 
 Create a Service

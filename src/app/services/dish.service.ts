@@ -22,7 +22,7 @@ export class DishService {
   }
 
   getDish(id: string): Observable<Dish> {
-    /* return of(DISHES.filter((dish) => (dish.id === id))[0]).pipe(delay(500)); */
+    /* return of(DISHES.filter((dish) => (dish._id === id))[0]).pipe(delay(500)); */
     return this.http.get<Dish>(baseURL + 'dishes/' + id)
     .pipe(catchError(this.processHTTPMsgService.handleError));
   }
@@ -35,8 +35,8 @@ export class DishService {
   }
 
   getDishIds(): Observable<string[] | any> {
-    /* return of(DISHES.map(dish => dish.id )); */
-    return this.getDishes().pipe(map(dishes => dishes.map(dish => dish.id)))
+    /* return of(DISHES.map(dish => dish._id )); */
+    return this.getDishes().pipe(map(dishes => dishes.map(dish => dish._id)))
     .pipe(catchError(error => error));
   }
 
@@ -46,7 +46,7 @@ export class DishService {
         'Content-Type':  'application/json'
       })
     };
-    return this.http.put<Dish>(baseURL + 'dishes/' + dish.id, dish, httpOptions)
+    return this.http.put<Dish>(baseURL + 'dishes/' + dish._id, dish, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
 
   }

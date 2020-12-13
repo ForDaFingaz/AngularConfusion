@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
-import { Dish } from '../shared/dish';
-import { DishService } from "../services/dish.service";
-import { Params, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
-import { switchMap } from 'rxjs/operators';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Comment } from '../shared/comment';
 import { visibility, flyInOut, expand } from '../animations/app.animation';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Dish } from '../shared/dish';
+import { DishService } from '../services/dish.service';
+import { FavoriteService } from '../services/favorite.service';
+import { Comment } from '../shared/comment';
+
 
 @Component({
   selector: 'app-dishdetail',
@@ -43,7 +45,8 @@ export class DishdetailComponent implements OnInit {
 
   visibility = 'shown';
 
-  constructor(private dishservice: DishService,
+  constructor(
+    private dishservice: DishService,
     private route: ActivatedRoute,
     private location: Location,
     private com: FormBuilder,
@@ -61,7 +64,7 @@ export class DishdetailComponent implements OnInit {
       .subscribe(dish => {
         this.dish = dish;
         this.dishcopy = dish;
-        this.setPrevNext(dish.id);
+        this.setPrevNext(dish._id);
         this.visibility = 'shown';
       },
       errMess => this.errMess = <any>errMess);
@@ -70,7 +73,7 @@ export class DishdetailComponent implements OnInit {
   createForm(): void {
     this.commentForm = this.com.group({
       author: ['', [Validators.required, Validators.minLength(2)] ],
-      rating: ['5',[]],
+      rating: ['5', []],
       comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(500)] ]
     });
 
@@ -105,7 +108,7 @@ export class DishdetailComponent implements OnInit {
       date: ''
     });
     this.commentFormDirective.resetForm({rating: '5'});
-    var d = (new Date()).toISOString();
+    const d = (new Date()).toISOString();
     this.comment.date = d;
     this.dishcopy.comments.push(this.comment);
     this.dishservice.putDish(this.dishcopy)

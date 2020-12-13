@@ -30,7 +30,8 @@ export class HomeComponent implements OnInit {
   promErrMess: string;
   leadErrMess: string;
 
-  constructor(private dishservice: DishService,
+  constructor(
+    private dishservice: DishService,
     private promotionservice: PromotionService,
     private leaderservice: LeaderService,
     @Inject('BaseURL') public baseURL) { }

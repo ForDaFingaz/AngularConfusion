@@ -22,8 +22,9 @@ export class MenuComponent implements OnInit {
   selectedDish: Dish;
   errMess: string;
 
-  constructor(private dishService: DishService,
-    @Inject('BaseURL') public baseURL) { }
+  constructor(
+    private dishService: DishService,
+    @Inject('BaseURL') private baseURL) { }
 
   ngOnInit() {
     this.dishService.getDishes()
