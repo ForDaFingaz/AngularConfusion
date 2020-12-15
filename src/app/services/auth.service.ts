@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { baseURL } from '../shared/baseurl';
+import { BaseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 
 interface AuthResponse {
@@ -34,7 +34,7 @@ export class AuthService {
    }
 
    checkJWTtoken() {
-     this.http.get<JWTResponse>(baseURL + 'users/checkJWTtoken')
+     this.http.get<JWTResponse>(BaseURL + 'users/checkJWTtoken')
      .subscribe(res => {
        console.log('JWT Token Valid: ', res);
        this.sendUsername(res.user.username);
@@ -88,7 +88,7 @@ export class AuthService {
    }
 
    logIn(user: any): Observable<any> {
-     return this.http.post<AuthResponse>(baseURL + 'users/login',
+     return this.http.post<AuthResponse>(BaseURL + 'users/login',
        {'username': user.username, 'password': user.password})
        .pipe( map(res => {
            this.storeUserCredentials({username: user.username, token: res.token});

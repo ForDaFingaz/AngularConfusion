@@ -18,27 +18,27 @@ import { flyInOut, expand } from '../animations/app.animation';
 })
 export class AboutComponent implements OnInit {
 
+  leaders: Leader[];
+  errMess: string;
+  selectedLeader: Leader;
+
   constructor(
     private leaderService: LeaderService,
-    @Inject('BaseURL') public baseURL
-    ) { }
+    @Inject('BaseURL') public BaseURL) { }
 
   /*
   ngOnInit(): void {
   }
   */
 
- leaders: Leader[];
- selectedLeader: Leader;
-
-
-
  onSelect(leader: Leader) {
    this.selectedLeader = leader;
  }
 
   ngOnInit() {
-    this.leaderService.getLeaders().subscribe(leaders => this.leaders = leaders);
+    this.leaderService.getLeaders()
+    .subscribe(leaders => this.leaders = leaders,
+      errmess => this.errMess = <any>errmess);
   }
 
 }

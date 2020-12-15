@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { baseURL } from '../shared/baseurl';
+import { BaseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 import { AuthService } from './auth.service';
 
@@ -23,12 +23,12 @@ export class FavoriteService {
     if (!this.auth.isLoggedIn()) {
       return null;
     }
-    return this.http.get<Favorite>(baseURL + 'favorites')
+    return this.http.get<Favorite>(BaseURL + 'favorites')
       .pipe(catchError(error => this.processHTTPMsgService.handleError(error)));
   }
 
   postFavorites(dishids: any) {
-    return this.http.post(baseURL + 'favorites/', dishids)
+    return this.http.post(BaseURL + 'favorites/', dishids)
     .pipe(catchError(error => this.processHTTPMsgService.handleError(error)));
   }
 
@@ -36,17 +36,17 @@ export class FavoriteService {
     if (!this.auth.isLoggedIn()) {
       return of({ exists: false, favorites: null });
     }
-    return this.http.get<FavoriteExists>(baseURL + 'favorites/' + id)
+    return this.http.get<FavoriteExists>(BaseURL + 'favorites/' + id)
     .pipe(catchError(error => this.processHTTPMsgService.handleError(error)));
   }
 
   postFavorite(id: string) {
-    return this.http.post(baseURL + 'favorites/' + id, {})
+    return this.http.post(BaseURL + 'favorites/' + id, {})
     .pipe(catchError(error => this.processHTTPMsgService.handleError(error)));
   }
 
   deleteFavorite(id: string) {
-    return this.http.delete(baseURL + 'favorites/' + id)
+    return this.http.delete(BaseURL + 'favorites/' + id)
     .pipe(catchError(error => this.processHTTPMsgService.handleError(error)));
   }
 }

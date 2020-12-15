@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Feedback } from '../shared/feedback';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { baseURL } from '../shared/baseurl';
+import { BaseURL } from '../shared/baseurl';
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class FeedbackService {
         'Content-Type':  'application/json'
       })
     };
-    return this.http.post<Feedback>(baseURL + 'feedback/', feedback, httpOptions)
+    return this.http.post<Feedback>(BaseURL + 'feedback/', feedback, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
 
   }

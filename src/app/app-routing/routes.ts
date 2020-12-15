@@ -1,14 +1,16 @@
-import { Routes } from '@angular/router';
 
-import { MenuComponent } from '../menu/menu.component';
+import { Routes } from '@angular/router';
 import { DishdetailComponent } from '../dishdetail/dishdetail.component';
 import { HomeComponent } from '../home/home.component';
 import { AboutComponent } from '../about/about.component';
+import { MenuComponent } from '../menu/menu.component';
+import { FavoritesComponent } from './../favorites/favorites.component';
 import { ContactComponent } from '../contact/contact.component';
 
 export const routes: Routes = [
   { path: 'home',  component: HomeComponent },
   { path: 'menu',     component: MenuComponent },
+  { path: 'favorites',     component: FavoritesComponent },
   { path: 'aboutus',     component: AboutComponent },
   { path: 'contactus',     component: ContactComponent },
   { path: 'dishdetail/:id',     component: DishdetailComponent },

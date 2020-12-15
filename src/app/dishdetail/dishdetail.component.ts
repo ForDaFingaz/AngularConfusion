@@ -1,19 +1,21 @@
-import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
-import { visibility, flyInOut, expand } from '../animations/app.animation';
-import { Params, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 import { Dish } from '../shared/dish';
+import { Comment } from '../shared/comment';
 import { DishService } from '../services/dish.service';
 import { FavoriteService } from '../services/favorite.service';
-import { Comment } from '../shared/comment';
 
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
+  // tslint:disable-next-line:use-host-property-decorator
   host: {
     '[@flyInOut]': 'true',
     'style': 'display: block;'
@@ -24,63 +26,53 @@ import { Comment } from '../shared/comment';
     expand()
   ]
 })
-
-
-
 export class DishdetailComponent implements OnInit {
-  commentForm: FormGroup;
-  comment: Comment;
 
-  @Input()
+  @ViewChild('cform') commentFormDirective;
   dish: Dish;
   dishcopy: Dish;
-
-  @ViewChild('comform') commentFormDirective;
-
   dishIds: string[];
   prev: string;
   next: string;
+  comment: Comment;
   errMess: string;
-
-
   visibility = 'shown';
+  favorite = false;
+
+  formErrors = {
+    'comment': ''
+  };
+
+  validationMessages = {
+    'comment': {
+      'required':      'Comment is required.'
+    }
+  };
+
+  commentForm: FormGroup;
 
   constructor(
     private dishservice: DishService,
+    private favoriteService: FavoriteService,
     private route: ActivatedRoute,
     private location: Location,
-    private com: FormBuilder,
-    @Inject('BaseURL') public baseURL) {
-      this.createForm();
-    }
+    private fb: FormBuilder,
+    @Inject('BaseURL') public BaseURL) { }
 
   ngOnInit() {
+    this.createForm();
+
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params
-      .pipe(switchMap((params: Params) => {
-        this.visibility='hidden';
-        return this.dishservice.getDish(params['id']);
-      }))
-      .subscribe(dish => {
-        this.dish = dish;
-        this.dishcopy = dish;
-        this.setPrevNext(dish._id);
-        this.visibility = 'shown';
-      },
-      errMess => this.errMess = <any>errMess);
-  }
-
-  createForm(): void {
-    this.commentForm = this.com.group({
-      author: ['', [Validators.required, Validators.minLength(2)] ],
-      rating: ['5', []],
-      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(500)] ]
-    });
-
-    this.commentForm.valueChanges
-      .subscribe(data => this.onValueChanged(data));
-
-    this.onValueChanged(); // (re)set validation messages now
+    this.route.params.pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishservice.getDish(params['id']); }))
+    .subscribe(dish => {
+      this.dish = dish;
+      this.setPrevNext(dish._id);
+      this.visibility = 'shown';
+      this.favoriteService.isFavorite(this.dish._id)
+      .subscribe(resp => { console.log(resp); this.favorite = <boolean>resp.exists; },
+          err => console.log(err));
+    },
+    errmess => this.errMess = <any>errmess);
   }
 
   setPrevNext(dishId: string) {
@@ -93,54 +85,31 @@ export class DishdetailComponent implements OnInit {
     this.location.back();
   }
 
-  formErrors = {
-    'author': '',
-    'rating': '',
-    'comment': ''
-  };
-
-  onSubmit(){
-    this.comment = this.commentForm.value;
-    console.log(this.comment);
-    this.commentForm.reset({
-      author: '',
-      comment: '',
-      date: ''
+  createForm() {
+    this.commentForm = this.fb.group({
+      rating: 5,
+      comment: ['', Validators.required]
     });
-    this.commentFormDirective.resetForm({rating: '5'});
-    const d = (new Date()).toISOString();
-    this.comment.date = d;
-    this.dishcopy.comments.push(this.comment);
-    this.dishservice.putDish(this.dishcopy)
-      .subscribe(dish => {
-        this.dish = dish;
-        this.dishcopy = dish;},
-        errmess => {
-          this.dish = null;
-          this.dishcopy = null;
-          this.errMess = <any>errmess;});
+
+    this.commentForm.valueChanges
+      .subscribe(data => this.onValueChanged(data));
+
+    this.onValueChanged(); // (re)set validation messages now
   }
 
-  validationMessages = {
-    'author': {
-      'required':      'Name is required.',
-      'minlength':     'Name must be at least 2 characters long.'
-    },
-    'rating': {},
-    'comment': {
-      'required':      'Comment is required.',
-      'minlength':     'Name must be at least 2 characters long.',
-      'maxlength':     'Comment cannot be more than 500 characters long.'
-    },
-  };
+  onSubmit() {
+    this.dishservice.postComment(this.dish._id, this.commentForm.value)
+      .subscribe(dish => this.dish = <Dish>dish);
+    this.commentFormDirective.resetForm();
+    this.commentForm.reset({
+      rating: 5,
+      comment: ''
+    });
+  }
 
   onValueChanged(data?: any) {
     if (!this.commentForm) { return; }
     const form = this.commentForm;
-    console.log(this.commentForm.status);
-    console.log(this.commentForm.value.comment);
-    console.log(this.commentForm.value.rating);
-    console.log(this.commentForm.value.author);
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
         // clear previous error message (if any)
@@ -154,9 +123,14 @@ export class DishdetailComponent implements OnInit {
             }
           }
         }
-
       }
     }
   }
 
+  addToFavorites() {
+    if (!this.favorite) {
+      this.favoriteService.postFavorite(this.dish._id)
+        .subscribe(favorites => { console.log(favorites); this.favorite = true; });
+    }
+  }
 }
